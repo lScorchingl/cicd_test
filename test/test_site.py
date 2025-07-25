@@ -1,7 +1,9 @@
+from selenium.webdriver.chrome.options import Options
 import time
 from pages.homepage import HomePage
 from pages.product import ProductPage
 
+options.add_argument("--headless")
 
 def test_autorization(browser):
     homepage = HomePage(browser)
