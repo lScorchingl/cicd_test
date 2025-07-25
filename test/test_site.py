@@ -3,22 +3,68 @@ from pages.homepage import HomePage
 from pages.product import ProductPage
 
 
-def test_open_s6(browser):
+def test_autorization(browser):
     homepage = HomePage(browser)
-    homepage.open()
-    homepage.click_galaxy_s6()
-    product_page = ProductPage(browser)
-    product_page.check_title_is('Samsung galaxy s6')
+    homepage.open_passport()
+    homepage.autorization()
 
 
-def test_two_monitors(browser):
+def test_language_check(browser):
     homepage = HomePage(browser)
-    homepage.open()
-#   browser.get('https://www.demoblaze.com/')
-    homepage.click_monitor()
-    # monitor_link = browser.find_element(By.CSS_SELECTOR, '''[onclick="byCat('monitor')"]''')
-    # monitor_link.click()
-    time.sleep(2)
-    homepage.check_products_count(2)
-    # monitors = browser.find_elements(By.CSS_SELECTOR, '.card')
-    # assert len(monitors) == 2
+    homepage.open_passport()
+    homepage.autorization()
+    homepage.language_check()
+
+
+def test_avatar_check(browser):
+    homepage = HomePage(browser)
+    homepage.open_passport()
+    homepage.autorization()
+    homepage.avatar_check()
+
+
+def test_check_area(browser):
+    homepage = HomePage(browser)
+    homepage.open_passport()
+    homepage.autorization()
+    homepage.check_area()
+
+
+def test_check_birthday(browser):
+    homepage = HomePage(browser)
+    homepage.open_passport()
+    homepage.autorization()
+    homepage.check_birthday()
+
+
+def test_change_password(browser):
+    homepage = HomePage(browser)
+    homepage.open_passport()
+    homepage.autorization()
+    homepage.change_password()
+
+
+def test_change_user_data(browser):
+    homepage = HomePage(browser)
+    homepage.open_passport()
+    homepage.autorization()
+    homepage.change_user_data()
+
+
+# def test_change_busy_email(browser): ФУНКЦИЯ НЕ РАБОТАЕТ, ПАСПОРТ ПИШЕТ ЧТО ПОДОЗРИТЕЛЬНАЯ АКТИВНОСТЬ, И ДУШИТ. НЕ ИСКАЛ ПУТИ ОБХОДА.
+#     homepage = HomePage(browser)
+#     homepage.open_passport()
+#     homepage.autorization()
+#     homepage.change_busy_email()
+
+
+def test_exit_account(browser):
+    homepage = HomePage(browser)
+    homepage.open_passport()
+    homepage.autorization()
+    homepage.exit_account()
+
+
+def test_check_demo_mode(browser):
+    homepage = HomePage(browser)
+    homepage.check_demo_mode()
