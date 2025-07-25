@@ -8,5 +8,5 @@ cffi==1.16.0
 charset-normalizer==3.3.2
 colorama==0.4.6
 Django==5.1.1
-ec==0.1.62  # Версия для Python 3.10
+ec==0.2.5
 findpython==2020.12.3  # Если это нужный пакет
