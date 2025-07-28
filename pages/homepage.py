@@ -73,8 +73,7 @@ class HomePage:
         untranslated_words = english_words - exceptions
 
         # Проверяем наличие английских слов на русском сайте
-        assert untranslated_words, f"На сайте присутствуют следующие английские слова: {untranslated_words}"
-        print("На сайте нет английских слов (кроме исключений).")
+        assert not untranslated_words, f"Найдены непереведенные слова: {untranslated_words}"
 
     def avatar_check(self):
 
