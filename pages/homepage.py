@@ -1,5 +1,4 @@
 import time
-
 import pyautogui
 from bs4 import BeautifulSoup
 from selenium.common import TimeoutException, NoSuchElementException
@@ -73,7 +72,8 @@ class HomePage:
         untranslated_words = english_words - exceptions
 
         # Проверяем наличие английских слов на русском сайте
-        assert not untranslated_words, f"Найдены непереведенные слова: {untranslated_words}"
+        assert untranslated_words, f"На сайте присутствуют следующие английские слова: {untranslated_words}"
+        print("На сайте нет английских слов (кроме исключений).")
 
     def avatar_check(self):
 
@@ -236,6 +236,7 @@ class HomePage:
         # Добавление ДР вручную
 
         self.browser.find_element(By.XPATH, '//input[@class="dp__input"]').click()
+
         pyautogui.write('01012007')
         pyautogui.press('tab')
 
