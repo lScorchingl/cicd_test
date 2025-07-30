@@ -15,24 +15,26 @@ jobs:
   run-tests:
     runs-on: ubuntu-latest
     steps:
-      - name: Set up Xvfb and dependencies
+      - name: Set up Xvfb with proper auth
         run: |
           sudo apt-get update
-          sudo apt-get install -y xvfb xauth x11-utils libxkbcommon-x11-0
+          sudo apt-get install -y xvfb xauth
           
-          # Запускаем Xvfb в фоновом режиме с ожиданием
+          # Создаем и настраиваем .Xauthority
+          touch ~/.Xauthority
+          xauth generate :99 . trusted
+          
+          # Запускаем Xvfb с ожиданием
           Xvfb :99 -screen 0 1280x1024x24 &
-          sleep 5  # Даем время на запуск
+          sleep 3
           
-          # Проверяем что процесс запущен
+          # Проверяем процесс
           ps aux | grep Xvfb
           
-          # Устанавливаем переменную DISPLAY
+          # Устанавливаем переменные окружения
           export DISPLAY=:99
           echo "DISPLAY=:99" >> $GITHUB_ENV
-          
-          # Проверяем доступность дисплея (теперь xdpyinfo установлен)
-          xdpyinfo -display $DISPLAY || echo "Xvfb check failed, but continuing"
+          echo "XAUTHORITY=$HOME/.Xauthority" >> $GITHUB_ENV
 
       - uses: actions/checkout@v4
       
@@ -45,8 +47,13 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install webdriver-manager PyVirtualDisplay
+          pip install webdriver-manager pyautogui PyVirtualDisplay
 
       - name: Run tests
         run: |
+          # Дополнительная проверка окружения
+          echo "Current DISPLAY: $DISPLAY"
+          echo "XAUTHORITY: $XAUTHORITY"
+          ls -la ~/.Xauthority
+          
           python -m pytest -v
