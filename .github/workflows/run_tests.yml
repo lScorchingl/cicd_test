@@ -15,15 +15,18 @@ jobs:
   run-tests:
     runs-on: ubuntu-latest
     steps:
-      # Шаг для настройки виртуального дисплея Xvfb (обязателен для GUI-тестов)
-      - name: Set up Xvfb
+      - name: Set up Xvfb and dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y xvfb xauth libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 libxcb-shape0 libxcb-xfixes0 libxcb-xinerama0
+          # Устанавливаем Xvfb и все необходимые X11-утилиты (включая xdpyinfo)
+          sudo apt-get install -y xvfb xauth x11-utils x11-apps libxkbcommon-x11-0
+          # Запускаем виртуальный дисплей
           Xvfb :99 -screen 0 1280x1024x24 &
           export DISPLAY=:99
           echo "DISPLAY=:99" >> $GITHUB_ENV
-          sleep 5  # Даем Xvfb время для запуска
+          # Проверяем что Xvfb работает (теперь xdpyinfo будет доступен)
+          xdpyinfo -display $DISPLAY
+          echo "Xvfb is running on $DISPLAY"
 
       - uses: actions/checkout@v4
       
@@ -37,14 +40,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install webdriver-manager
-          # Дополнительные зависимости для GUI (если нужны)
+          # Дополнительные зависимости для GUI
           pip install pyautogui PyVirtualDisplay
 
-      - name: Verify Xvfb is working
-        run: |
-          xdpyinfo -display $DISPLAY
-          echo "Xvfb is running on $DISPLAY"
-      
       - name: Run tests
         run: |
           python -m pytest -v
