@@ -66,7 +66,7 @@ class HomePage:
         english_words = set(re.findall(r'\b[a-zA-Z]+\b', page_text))
 
         # Исключения (слова, которые могут присутствовать на русском сайте)
-        exceptions = {"EN", "teceltest@mail.ru", "TECEL", "teceltest", "mail"}
+        exceptions = {"EN", "teceltest@mail.ru", "TECEL", "teceltest", "mail", "set()"}
 
         # Фильтруем слова на английском, исключая допустимые слова
         untranslated_words = english_words - exceptions
