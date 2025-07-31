@@ -162,7 +162,7 @@ class HomePage:
         pyautogui.press('tab')
 
         # Ожидание надписи 'Сохранено'
-        if self.browser.find_element(By.XPATH, '//*[@class="notification success show"]'):
+        if self.browser.find_element(By.CSS_SELECTOR, '.notification.success.show'):
             print("Кнопка 'Сохранено' появилась!")
         else:
             print("Кнопка 'Сохранено' не появилась!")
