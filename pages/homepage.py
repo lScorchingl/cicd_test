@@ -162,7 +162,7 @@ class HomePage:
         pyautogui.press('tab')
 
         # Ожидание надписи 'Сохранено'
-        if self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[contains(text(), "Сохранено")]'))):
+        if self.wait.until(EC.visibility_of_element_located((By.XPATH, '//*[text() = "Сохранено"]'))):
             print("Кнопка 'Сохранено' появилась!")
         else:
             print("Кнопка 'Сохранено' не появилась!")
