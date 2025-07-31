@@ -260,7 +260,7 @@ class HomePage:
         # Выходим из профиля и идём проверять старый пароль qwe123
         self.browser.find_element(By.XPATH, "//span[@id='p-top-title-1']").click()
 
-        self.browser.find_element(By.XPATH, "//*[contains(text(), 'ыход')]").click()
+        self.browser.find_element(By.XPATH, "//*[@class="drop-menu"]").click()
 
         login_input = self.browser.find_element(By.ID, "inp-login-1")
         login_input.send_keys('teceltest@mail.ru')
