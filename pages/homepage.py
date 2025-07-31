@@ -118,7 +118,7 @@ class HomePage:
         # Подтверждение загрузки
         self.wait.until(EC.presence_of_element_located((By.ID, 'p-set-avatar-1')))
 
-        self.wait.until(EC.presence_of_element_located((By.ID, 'p-cropper-ok-1'))).click()
+        self.wait.until(EC.element_to_be_clickable((By.ID, 'p-cropper-ok-1'))).click()
 
         self.browser.refresh()
 
