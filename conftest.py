@@ -15,6 +15,6 @@ def browser():
 
     browser = webdriver.Chrome(options=options)
     browser.maximize_window()
-    browser.implicitly_wait(20)
+    browser.implicitly_wait(10)
     yield browser
     browser.quit()
