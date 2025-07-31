@@ -143,7 +143,7 @@ class HomePage:
         delete_button = self.wait.until(EC.presence_of_element_located((By.XPATH, '//span[@class="delete"]')))
         delete_button.click()
 
-        ok_button = self.wait.until(EC.element_to_be_clickable((By.CSS, "div[class='modal-confirm'] button:nth-child(3)")))
+        ok_button = self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "div[class='modal-confirm'] button:nth-child(3)")))
         ok_button.click()
 
         self.browser.refresh()
