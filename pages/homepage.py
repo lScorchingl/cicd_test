@@ -44,35 +44,30 @@ class HomePage:
         print(f"{' ' * 79}Авторизация успешна")
 
     def language_check(self):
-
-        # ЗАПУСТИТЬ КОД ПОСЛЕ ТОГО КАК ДОПИШУ ЛАНГУАГЕ ЧЕК, ВДРУГ АВТОРИЗАЦИЯ СЛЕТИТ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
         language_button = WebDriverWait(self.browser, 10).until(
             EC.presence_of_element_located((By.XPATH, "//span[@class='lang-switcher']"))
         )
-
-        # Меняем язык на EN
-        language_button.click()
-
-        # Меняем язык на RU
-        language_button.click()
-
-        # Извлекаем HTML-код страницы после всех действий
+    
+        # Меняем язык на EN и обратно на RU
+        language_button.click()  # EN
+        language_button.click()  # RU
+    
+        # Получаем текст страницы
         page_source = self.browser.page_source
         soup = BeautifulSoup(page_source, 'html.parser')
-
-        # Ищем английские слова на странице
         page_text = soup.get_text()
+    
+        # Ищем английские слова (только латинские буквы)
         english_words = set(re.findall(r'\b[a-zA-Z]+\b', page_text))
-
-        # Исключения (слова, которые могут присутствовать на русском сайте)
-        exceptions = {"EN", "teceltest@mail.ru", "TECEL", "teceltest", "mail", "set"}
-
-        # Фильтруем слова на английском, исключая допустимые слова
+    
+        # Исключения (допустимые английские слова)
+        exceptions = {"EN", "teceltest@mail.ru", "TECEL", "teceltest", "mail"}
+    
+        # Убираем исключения из найденных слов
         untranslated_words = english_words - exceptions
-
-        # Проверяем наличие английских слов на русском сайте
-        assert untranslated_words, f"На сайте присутствуют следующие английские слова: {untranslated_words}"
+    
+        # Проверяем, что нет лишних английских слов
+        assert not untranslated_words, f"На сайте присутствуют следующие английские слова: {untranslated_words}"
         print("На сайте нет английских слов (кроме исключений).")
 
     def avatar_check(self):
